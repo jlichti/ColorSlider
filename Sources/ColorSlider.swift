@@ -189,9 +189,12 @@ extension ColorSlider {
 			switch orientation {
 				
 			// Set default preview center
-			case .horizontal where preview.center.y != bounds.midY,
-			     .vertical where preview.center.x != bounds.midX:
-				centerPreview(at: .zero)
+            		case .horizontal where preview.center.y != bounds.midY,
+                		 .vertical where preview.center.x != bounds.midX:
+                		let sliderProgress = gradientView.calculateSliderProgress(for: internalColor)
+                
+	            		// centerPreview only uses the x or y value based on the orientation and ignores the other value.
+            			centerPreview(at: CGPoint(x: sliderProgress * bounds.width, y: sliderProgress * bounds.height))
 				
 			// Adjust preview view size if needed
 			case .horizontal where autoresizesSubviews:
